@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"oidc_copycat/oauth2"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +10,8 @@ import (
 // registerRoutes manages registering HTTP routes with the router
 func registerRoutes(r *gin.Engine) {
 	r.GET("/", handleHealthCheck)
+
+	oauth2.RegisterHandlers(r)
 }
 
 func handleHealthCheck(c *gin.Context) {

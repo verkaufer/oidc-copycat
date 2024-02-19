@@ -20,6 +20,7 @@ func main() {
 	defer stop()
 
 	router := gin.Default()
+	router.LoadHTMLGlob("templates/**/*")
 
 	registerRoutes(router)
 
