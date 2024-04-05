@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"embed"
 	"log"
 	"net/http"
 	"os/signal"
@@ -14,6 +15,9 @@ import (
 // TODO: read from env
 const SERVE_PORT = ":8080"
 
+//go:embed assets/* templates/*
+var f embed.FS
+
 func main() {
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
@@ -21,6 +25,7 @@ func main() {
 
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/**/*")
+	router.StaticFS("/public", http.FS(f))
 
 	registerRoutes(router)
 
