@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="../assets/css/pico.min.css">
+    <style>
+        .login {
+            width: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 510px;
+        }
+    </style>
+    <title>Hello world!</title>
+</head>
+
+<body>
+
+    <main class="container login">
+        <section class="login">
+            <h1>Sign in</h1>
+            <form>
+                <label for="user">Identity</label>
+                <select name="user" aria-label="Select user..." required>
+                    <option selected disabled value="">
+                        Select user...
+                    </option>
+                    <option>afakeuser@agilebits.com</option>
+                    <option>wendy.appleseed+test@agilebits.com</option>
+                </select>
+                <fieldset>
+                    <label for="claims">Customize Claims</label>
+                    <textarea 
+                    name="claims"
+                    placeholder="Define ID Token claims..."
+                    aria-label="customized-claims">
+{
+    "sub": "abc123", 
+    "given_name": "Wendy", 
+    "family_name": "Appleseed", 
+    email: "example@example.com"
+}
+                </textarea>
+                </fieldset>
+
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+
+
+    </main>
+</body>
+
+</html>
