@@ -1,0 +1,43 @@
+{{ template "head" . }}
+{{ template "admin-nav" . }} 
+
+<main class="container">
+    <section>
+        <h1>Directory</h1>
+        <p>
+            <a href="/admin/users/new" role="button" tabindex="0">New User</a>
+        </p>
+        <article>
+            <h2>Doug Dimmadome</h2>
+            <form>
+                <fieldset class="grid">
+                    <label>
+                        First Name (Given Name)
+                        <input type="text" name="first_name" placeholder="First Name"
+                            value="Doug">
+                    </label>
+                    <label>
+                        Last Name (Family Name)
+                        <input type="text" name="last_name" placeholder="Last Name"
+                            value="Dimmadome" />
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <label>
+                        Email
+                        <input type="email" name="email" placeholder="foo.bar@example.com" value="doug@dimmadome.com">
+                    </label>
+                    <label>
+                        Directory ID
+                        <input type="text" name="directory_id" value="asg24i9dsf0bn31">
+                        <small>Identifier unique within the Directory. Sent as <kbd>sub</kbd> claim.</small>
+                    </label>
+                </fieldset>
+                <input type="button" value="Save" />
+            </form>
+        </article>
+    </section>
+
+</main>
+
+{{ template "footer" . }}
