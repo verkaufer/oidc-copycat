@@ -11,8 +11,16 @@ import (
 func registerRoutes(r *gin.Engine) {
 	r.GET("/", handleHealthCheck)
 	r.GET("/admin", handleAdminIndex)
-	r.GET("/admin/applications", handleAdminApplications)
-	r.GET("/admin/users", handleDirectoryList)
+
+	// Manage OIDC Applications
+	r.GET("/admin/applications", handleListApplications)
+	r.POST("/admin/applications", handleCreateApplication)
+	r.GET("/admin/applications/new", handleNewApplicationForm)
+
+	// Manage Directory
+	r.GET("/admin/users", handleListDirectory)
+	r.POST("/admin/users", handleCreateUser)
+	r.GET("/admin/users/new", handleNewUserForm)
 
 	oauth2.RegisterHandlers(r)
 }
@@ -24,17 +32,5 @@ func handleHealthCheck(c *gin.Context) {
 func handleAdminIndex(c *gin.Context) {
 	c.HTML(http.StatusOK, "admin-index.html", gin.H{
 		"title": "Admin Panel",
-	})
-}
-
-func handleAdminApplications(c *gin.Context) {
-	c.HTML(http.StatusOK, "admin-applications.html", gin.H{
-		"title": "Applications",
-	})
-}
-
-func handleDirectoryList(c *gin.Context) {
-	c.HTML(http.StatusOK, "admin-directory.html", gin.H{
-		"title": "User Directory",
 	})
 }
