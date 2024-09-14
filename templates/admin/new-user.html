@@ -1,0 +1,57 @@
+{{ template "head" . }} 
+{{ template "admin-nav" . }}
+
+<main class="container">
+  <section>
+    <h1>New User</h1>
+
+    <form action="/admin/users" method="POST">
+      <fieldset class="grid">
+        <label>
+          First Name (Given Name)
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            value=""
+          />
+        </label>
+        <label>
+          Last Name (Family Name)
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            value=""
+          />
+        </label>
+      </fieldset>
+      <fieldset>
+        <label>
+          Email
+          <input
+            type="email"
+            name="email"
+            placeholder="foo.bar@example.com"
+            value=""
+          />
+        </label>
+      </fieldset>
+      <label>
+        Unique Identifier (optional)
+        <input
+          type="text"
+          name="identifier"
+          placeholder="abc345xyz987"
+          value=""
+        />
+        <small
+          >If no identifier is defined, one will be created during
+          submission.</small
+        >
+      </label>
+      <input type="submit" value="Create" />
+    </form>
+  </section>
+</main>
+{{ template "footer" . }}

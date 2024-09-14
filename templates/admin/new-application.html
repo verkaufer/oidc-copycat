@@ -1,0 +1,77 @@
+{{ template "head" . }} 
+{{ template "admin-nav" . }}
+
+<main class="container">
+  <section>
+    <h1>New Application</h1>
+    <form action="/admin/applications" method="POST">
+      <fieldset>
+        <label>
+          Application name
+          <input
+            type="text"
+            name="name"
+            placeholder="OIDC App name"
+          />
+        </label>
+        <fieldset>
+          <legend>Application Type</legend>
+          <input type="radio" id="public" name="visibility" checked value="public" />
+          <label htmlFor="public">Public</label>
+          <input type="radio" id="private" name="visibility" />
+          <label htmlFor="private">Private</label>
+        </fieldset>
+        <fieldset id="redirect_uri_list">
+          <legend>Redirect URIs</legend>
+          <input
+            type="text"
+            name="redirect_uri"
+            placeholder="Redirect URI"
+            value=""
+          />
+        </fieldset>
+        <button id="add_redirect_uri" class="secondary">
+          Add Redirect URI
+        </button>
+      </fieldset>
+      <input
+        type="submit"
+        value="Create Application"
+      />
+    </form>
+  </section>
+</main>
+
+<template id="tmpl_redirect_uri">
+  <div class="grid">
+    <input
+      type="text"
+      name="redirect_uri"
+      placeholder="Redirect URI"
+      value=""
+    />
+    <button class="outline contrast" name="removeRedirectUri">Remove ❌</button>
+  </div>
+</template>
+
+<script>
+  const redirectUriContainer = document.getElementById("redirect_uri_list");
+
+  const addRedirectUriInput = (e) => {
+    e.preventDefault();
+    redirectUriContainer.append(tmpl_redirect_uri.content.cloneNode(true));
+  };
+
+  const addRedirectURIBtn = document.getElementById("add_redirect_uri");
+  addRedirectURIBtn.addEventListener("click", addRedirectUriInput);
+
+  // Naïve listener to handle "remove" events triggered on the redirect URI inputs
+  document.body.addEventListener("click", (e) => {
+    if(e.target.name === "removeRedirectUri") {
+        e.target.parentElement.remove();
+    }
+  })
+
+</script>
+
+{{ template "footer" . }}

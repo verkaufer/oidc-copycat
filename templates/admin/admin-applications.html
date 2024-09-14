@@ -1,0 +1,68 @@
+{{ template "head" . }}
+{{ template "admin-nav" . }}
+
+<main class="container">
+    <section>
+        <h1>Registered Applications</h1>
+        <p>
+            <a href="admin/applications/new" role="button" tabindex="0">New Application</a>
+        </p>
+        <article>
+            <h2>SAMPLE-REMOVE ME</h2>
+            <form>
+                <fieldset>
+                    <label>
+                        Redirect URIs
+                        <input type="text" name="redirect_uri" placeholder="Redirect URI"
+                            value="https://localhost:1234/auth/oidc/redirect">
+                    </label>
+                    <label>
+                        Application ID
+                        <input type="text" name="application_id" readonly value="0ce7a2ed-2960-413f-910f-60afe2084225" />
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <h4>OAuth URIs</h4>
+                    <label>
+                        Well-Known URL
+                        <input name="well_known" readonly value="http://localhost:8080/{APP_ID}/.well-known/oidc-configuration" />
+                    </label>
+                    <label>
+                        Token URL
+                        <input name="token_url" readonly value="http://localhost:8080/oauth/token" />
+                    </label>
+                </fieldset>
+            </form>
+        </article>
+        <article>
+            <h2>Foobar</h2>
+            <form>
+                <fieldset>
+                    <label>
+                        Redirect URIs
+                        <input type="text" name="redirect_uri" placeholder="Redirect URI"
+                            value="https://localhost:1234/auth/oidc/redirect">
+                    </label>
+                    <label>
+                        Application ID
+                        <input type="text" name="application_id" readonly value="0ce7a2ed-2960-413f-910f-60afe2084225" />
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <h4>OAuth URIs</h4>
+                    <label>
+                        Well-Known URL
+                        <input name="well_known" readonly value="http://localhost:8080/{APP_ID}/.well-known/oidc-configuration" />
+                    </label>
+                    <label>
+                        Token URL
+                        <input name="token_url" readonly value="http://localhost:8080/oauth/token" />
+                    </label>
+                </fieldset>
+            </form>
+        </article>
+    </section>
+
+</main>
+
+{{ template "footer" .}}
