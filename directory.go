@@ -6,10 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func handleListDirectory(c *gin.Context) {
-	c.HTML(http.StatusOK, "admin-directory.html", gin.H{
-		"title": "User Directory",
-	})
+func handleListDirectory(directoryRepo DirectoryReader) gin.HandlerFunc {
+
+	return func(ctx *gin.Context) {
+		directory, err := directoryRepo.GetAllUsers()
+		if err != nil {
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+			return
+		}
+		ctx.HTML(http.StatusOK, "admin-directory.html", gin.H{
+			"title": "User Directory",
+			"users": directory.Users,
+		})
+	}
+
 }
 
 func handleNewUserForm(c *gin.Context) {

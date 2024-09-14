@@ -23,11 +23,13 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	directoryRepo := NewLocalJsonRepository("./users.json")
+
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/**/*")
 	router.StaticFS("/public", http.FS(f))
 
-	registerRoutes(router)
+	registerRoutes(router, directoryRepo)
 
 	srv := &http.Server{
 		Addr:    SERVE_PORT,

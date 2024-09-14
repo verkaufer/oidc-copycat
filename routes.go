@@ -8,7 +8,7 @@ import (
 )
 
 // registerRoutes manages registering HTTP routes with the router
-func registerRoutes(r *gin.Engine) {
+func registerRoutes(r *gin.Engine, directoryRepo DirectoryReader) {
 	r.GET("/", handleHealthCheck)
 	r.GET("/admin", handleAdminIndex)
 
@@ -18,7 +18,7 @@ func registerRoutes(r *gin.Engine) {
 	r.GET("/admin/applications/new", handleNewApplicationForm)
 
 	// Manage Directory
-	r.GET("/admin/users", handleListDirectory)
+	r.GET("/admin/users", handleListDirectory(directoryRepo))
 	r.POST("/admin/users", handleCreateUser)
 	r.GET("/admin/users/new", handleNewUserForm)
 
