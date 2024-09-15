@@ -2,7 +2,8 @@ package main
 
 import (
 	"net/http"
-	"oidc_copycat/oauth2"
+
+	"github.com/verkaufer/oidc-copycat/oauth2"
 
 	"github.com/gin-gonic/gin"
 )

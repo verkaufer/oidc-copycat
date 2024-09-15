@@ -1,4 +1,4 @@
-module oidc_copycat
+module github.com/verkaufer/oidc-copycat
 
 go 1.22
 
