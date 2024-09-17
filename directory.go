@@ -1,44 +1,55 @@
-package main
+package oidc_copycat
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
+	"fmt"
 )
 
-func handleListDirectory(directoryRepo DirectoryReader) gin.HandlerFunc {
-
-	return func(ctx *gin.Context) {
-		directory, err := directoryRepo.GetAllUsers()
-		if err != nil {
-			ctx.AbortWithStatus(http.StatusInternalServerError)
-			return
-		}
-		ctx.HTML(http.StatusOK, "admin-directory.html", gin.H{
-			"title": "User Directory",
-			"users": directory.Users,
-		})
-	}
-
+type DirectoryReader interface {
+	GetUser(userId string) (*User, error)
+	GetAllUsers() ([]User, error)
 }
 
-func handleNewUserForm(c *gin.Context) {
-	c.HTML(http.StatusOK, "new-user.html", gin.H{"title": "New User"})
+type DirectoryWriter interface {
+	CreateUser(u *User) (*User, error)
+	UpdateUser(u *User) (*User, error)
+	DeleteUser(userId string) error
 }
 
-func handleCreateUser(c *gin.Context) {
-	type User struct {
-		GivenName  string `form:"first_name" binding:"required" validate:"required,alphanumunicode"`
-		FamilyName string `form:"last_name" binding:"required" validate:"required,alphanumunicode"`
-		Email      string `form:"email" binding:"required" validate:"required,email"`
-		Identifier string `form:"identifier,omitempty" validate:"ascii"`
-	}
+type DirectoryReaderWriter interface {
+	DirectoryReader
+	DirectoryWriter
+}
 
-	var form User
-	if err := c.ShouldBind(&form); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+type User struct {
+	Identifier string `json:"identifier"`
+	FirstName  string `json:"givenName"`
+	LastName   string `json:"lastName"`
+	Email      string `json:"email"`
+}
 
-	c.JSON(http.StatusOK, gin.H{"givenName": form.GivenName, "familyName": form.FamilyName, "email": form.Email, "identifier": form.Identifier})
+func (u *User) Name() string {
+	return fmt.Sprintf("%s %s", u.FirstName, u.LastName)
+}
+
+type DirectoryService struct {
+	repo DirectoryReaderWriter
+}
+
+func NewDirectoryService(datasource DirectoryReaderWriter) *DirectoryService {
+	return &DirectoryService{
+		repo: datasource,
+	}
+}
+
+func (d *DirectoryService) GetUser(userId string) (*User, error) {
+	return d.repo.GetUser(userId)
+}
+
+func (d *DirectoryService) ListUsers() ([]User, error) {
+	return d.repo.GetAllUsers()
+}
+
+func (d *DirectoryService) CreateUser(user *User) (*User, error) {
+	// TODO: check if user exists first
+	return d.repo.CreateUser(user)
 }

@@ -4,7 +4,7 @@ BUILD_DIR=build
 .DEFAULT_GOAL = run
 
 build: 
-	go build -o ./${BUILD_DIR}/${APP_NAME} *.go
+	go build -o ./${BUILD_DIR}/${APP_NAME} ./cmd/server/*.go
 
 run: build
 	./${BUILD_DIR}/${APP_NAME}

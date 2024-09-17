@@ -1,15 +1,15 @@
-package main
+package server
 
 import (
 	"net/http"
 
-	"github.com/verkaufer/oidc-copycat/oauth2"
-
 	"github.com/gin-gonic/gin"
+	oidc_copycat "github.com/verkaufer/oidc-copycat"
+	"github.com/verkaufer/oidc-copycat/oauth2"
 )
 
 // registerRoutes manages registering HTTP routes with the router
-func registerRoutes(r *gin.Engine, directoryRepo DirectoryReader) {
+func RegisterRoutes(r *gin.Engine, directoryService *oidc_copycat.DirectoryService) {
 	r.GET("/", handleHealthCheck)
 	r.GET("/admin", handleAdminIndex)
 
@@ -19,8 +19,8 @@ func registerRoutes(r *gin.Engine, directoryRepo DirectoryReader) {
 	r.GET("/admin/applications/new", handleNewApplicationForm)
 
 	// Manage Directory
-	r.GET("/admin/users", handleListDirectory(directoryRepo))
-	r.POST("/admin/users", handleCreateUser)
+	r.GET("/admin/users", handleListDirectory(directoryService))
+	r.POST("/admin/users", handleCreateUser(directoryService))
 	r.GET("/admin/users/new", handleNewUserForm)
 
 	oauth2.RegisterHandlers(r)
